@@ -1,0 +1,17 @@
+{
+  "name": "solire/conf",
+  "type": "library",
+  "description": "",
+  "keywords": [""],
+  "license": "MIT",
+  "require-dev": {
+    "m6web/coke": "~1.2",
+    "siwayll/phpcs-norme-dpsi": "3.*"
+  },
+  "require": {
+    "php": "~5.6"
+  },
+  "autoload": {
+    "psr-4": { "Solire\\Conf\\": "" }
+  }
+}
