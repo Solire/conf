@@ -6,7 +6,7 @@
  * @license MIT http://mit-license.org/
  */
 
-namespace Solire\Conf\tests\unit;
+namespace Solire\Conf\Tests\Units;
 
 use atoum;
 use \Solire\Conf\Conf as TestClass;
