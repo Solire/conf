@@ -108,10 +108,9 @@ class Conf implements ConfigInterface, \ArrayAccess
     }
 
     /**
-     * Renvois la valeur d'un parametre de configuration
+     * Renvoie la valeur d'un parametre de configuration
      *
-     * @param string $section Code de la section
-     * @param string $key     Nom de la clé de configuration
+     * @param string $names Noms de sections
      *
      * @return mixed null si aucune configuration ne répond aux critères
      */
@@ -130,9 +129,8 @@ class Conf implements ConfigInterface, \ArrayAccess
     /**
      * Enregistre la valeur
      *
-     * @param mixed  $value   Valeur à mettre dans la configuration
-     * @param string $section Code de la section
-     * @param string $key     Nom de la clé de configuration
+     * @param mixed  $value Valeur à mettre dans la configuration
+     * @param string $names Noms de sections
      *
      * @return self
      */
@@ -157,8 +155,7 @@ class Conf implements ConfigInterface, \ArrayAccess
     /**
      * Supprime un parametre de configuration
      *
-     * @param string $section Code de la section
-     * @param string $key     Nom de la clé de configuration
+     * @param string $names Noms de sections
      *
      * @return self
      */
@@ -200,5 +197,25 @@ class Conf implements ConfigInterface, \ArrayAccess
         }
 
         return true;
+    }
+
+    /**
+     * Récupération des paramètres du même niveau
+     *
+     * @param string $names Noms de sections
+     *
+     * @return array
+     */
+    public function each(...$names)
+    {
+        $data = $this;
+        foreach ($names as $name) {
+            if (!isset($data->{$name})) {
+                return [];
+            }
+            $data = $data->{$name};
+        }
+
+        return get_object_vars($data);
     }
 }

@@ -151,4 +151,21 @@ class Conf extends atoum
                 ->isEqualTo('blabla')
         ;
     }
+
+    /**
+     * Contrôle parcour d'éléments
+     *
+     * @return void
+     */
+    public function testEach()
+    {
+        $this
+            ->if($conf = new TestClass())
+            ->and($conf->set(1, 'section1', 'name1'))
+            ->and($conf->set(2, 'section1', 'name2'))
+            ->and($conf->set('toto', 'stringSection'))
+            ->array($conf->each())
+            ->array($conf->each('section1'))
+        ;
+    }
 }

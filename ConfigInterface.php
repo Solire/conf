@@ -11,7 +11,7 @@ namespace Solire\Conf;
 interface ConfigInterface
 {
     /**
-     * Renvois la valeur d'un parametre de configuration
+     * Renvoie la valeur d'un parametre de configuration
      *
      * @param string $names Noms de sections
      *
@@ -46,6 +46,15 @@ interface ConfigInterface
      * @return boolean
      */
     public function has(...$names);
+
+    /**
+     * Récupération des paramètres du même niveau
+     *
+     * @param string $names Noms de sections
+     *
+     * @return array
+     */
+    public function each(...$names);
 
     /**
      * Renvois la valeur d'un parametre de configuration
