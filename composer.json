@@ -1,8 +1,7 @@
 {
   "name": "solire/conf",
   "type": "library",
-  "description": "",
-  "keywords": [""],
+  "description": "Config library",
   "license": "MIT",
   "require-dev": {
     "m6web/coke": "~1.2",
