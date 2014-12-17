@@ -22,3 +22,5 @@ define('TEST_TMP_DIR', __DIR__ . '/tmp');
 if (!is_dir(TEST_TMP_DIR)) {
     mkdir(TEST_TMP_DIR);
 }
+
+define('TEST_DATA_DIR', __DIR__ . '/testData');
