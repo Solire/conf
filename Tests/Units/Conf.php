@@ -165,7 +165,11 @@ class Conf extends atoum
             ->and($conf->set(2, 'section1', 'name2'))
             ->and($conf->set('toto', 'stringSection'))
             ->array($conf->each())
+                ->isEqualTo(['section1' => $conf->get('section1'), 'stringSection' => 'toto'])
             ->array($conf->each('section1'))
+                ->isEqualTo(['name1' => 1, 'name2' => 2])
+            ->array($conf->each('nonPresent'))
+                ->isEqualTo([])
         ;
     }
 }
