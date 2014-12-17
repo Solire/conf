@@ -1,6 +1,6 @@
 # Ignore propre aux éditeur #
 #############################
-/nbproject/private/
+/nbproject/
 
 # Numerous always-ignore extensions #
 #####################################
@@ -46,5 +46,5 @@ vendor/
 
 # atoum #
 #########
-tests/units/coverage/
-tests/units/tmp
+Tests/Units/coverage/
+Tests/Units/tmp
