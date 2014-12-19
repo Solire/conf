@@ -27,6 +27,7 @@ class ParseVar
      */
     const DELIMITER = ':';
 
+    private static $globalConf;
 
     /**
      * Remplace les noms des variables par leurs valeurs
@@ -37,7 +38,9 @@ class ParseVar
      */
     public static function run(Conf $conf)
     {
+        self::$globalConf = $conf;
         self::parseVar($conf);
+        self::$globalConf = null;
     }
 
     /**
@@ -68,7 +71,13 @@ class ParseVar
             foreach ($matchs['selector'] as $selector) {
                 $varSelector = explode(self::DELIMITER, $selector);
                 $target = self::START_VAR . $selector . self::END_VAR;
-                $value = str_replace($target, $conf->get(...$varSelector), $value);
+
+                $varValue = $conf->get(...$varSelector);
+                if ($varValue === null) {
+                    $varValue = self::$globalConf->get(...$varSelector);
+                }
+
+                $value = str_replace($target, $varValue, $value);
                 $conf->set($value, $key);
             }
         }

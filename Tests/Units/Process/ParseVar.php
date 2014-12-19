@@ -32,12 +32,12 @@ class ParseVar extends atoum
             ->and($conf->set('varName1', 'section1', 'name1'))
             ->and($conf->set('{%name1}', 'section1', 'name2'))
             ->and($conf->set('toto', 'stringSection'))
-            ->and($conf->set('{%section1:name2} et {%stringSection}', 'phrase'))
+            ->and($conf->set('{%section1:name2} et {%stringSection}', 'toto', 'foo', 'bar'))
             ->if(call_user_func(['\Solire\Conf\Process\ParseVar', 'run'], $conf))
 
             ->string($conf->get('section1', 'name2'))
                 ->isEqualTo('varName1')
-            ->string($conf->phrase)
+            ->string($conf->toto->foo->bar)
                 ->isEqualTo('varName1 et toto')
         ;
     }
