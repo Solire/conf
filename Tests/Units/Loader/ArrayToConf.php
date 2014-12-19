@@ -22,8 +22,6 @@ class ArrayToConf extends atoum
     {
         $this
             ->object(new TestClass([]))
-                ->class('\Solire\Conf\IniConfig')
-                ->hasInterface('\Solire\Conf\ConfigInterface')
         ;
     }
 
@@ -58,7 +56,7 @@ class ArrayToConf extends atoum
             ->string($conf['database']['name'])
                 ->isEqualTo('base')
             ->object($conf->get('base'))
-                ->class('\Solire\Conf\IniConfig')
+                ->class('\Solire\Conf\Conf')
             ->array((array) $conf->get('base'))
                 ->isEqualTo(['url' => 'http://localhost/'])
         ;
