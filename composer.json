@@ -4,8 +4,8 @@
   "description": "Config library",
   "license": "MIT",
   "require-dev": {
-    "m6web/coke": "~1.2",
-    "siwayll/phpcs-norme-dpsi": "3.*"
+    "m6web/coke": "~2.0",
+    "siwayll/phpcs-norme-dpsi": "~3.2"
   },
   "require": {
     "php": "~5.6"
