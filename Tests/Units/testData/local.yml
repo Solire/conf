@@ -1,0 +1,15 @@
+## YAML Template.
+---
+database:
+  name: "base"
+  dsn: "mysql:dbname=%s;host=%s"
+  host: localhost
+  port: 3306
+  tables:
+    - "user"
+    - "page"
+base:
+  url: 'http://localhost/'
+test:
+  foo:
+    bar: foobar
