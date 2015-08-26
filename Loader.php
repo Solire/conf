@@ -15,7 +15,7 @@ class Loader
      *
      * @param array|string $data Données sous forme de tableau ou chemin vers un
      * fichier contenant les informations de la config
-     * @return \Solire\Conf
+     * @return \Solire\Conf\Conf
      * @throws Exception Si $data n'est pas exploitable
      */
     public static function load($data)
