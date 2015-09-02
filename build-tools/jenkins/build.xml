@@ -60,7 +60,7 @@
                 <modified />
             </fileset>
 
-            <fileset dir="${basedir}/tests">
+            <fileset dir="${basedir}/Tests">
                 <include name="**/*.php" />
                 <modified />
             </fileset>
@@ -70,14 +70,14 @@
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="${basedir}/vendor/bin/phploc">
             <arg line="--log-csv ${basedir}/build/logs/phploc.csv
-              --exclude tests --exclude vendor
+              --exclude Tests --exclude vendor
               ${basedir}" />
         </exec>
     </target>
 
     <target name="pdepend" description="Calculate software metrics using PHP_Depend">
         <exec executable="${basedir}/vendor/bin/pdepend">
-            <arg value="--ignore=${basedir}/tests,${basedir}/vendor,${basedir}/docs" />
+            <arg value="--ignore=${basedir}/Tests,${basedir}/vendor,${basedir}/docs" />
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
             <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
@@ -92,7 +92,7 @@
             <arg value="text" />
             <arg value="codesize" />
             <arg value="--exclude" />
-            <arg value="${basedir}/tests,${basedir}/vendor" />
+            <arg value="${basedir}/Tests,${basedir}/vendor" />
         </exec>
     </target>
 
