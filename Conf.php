@@ -2,14 +2,19 @@
 
 namespace Solire\Conf;
 
+use ArrayAccess;
+use Solire\Conf\ProcessTrait;
+
 /**
  * Gestionnaire de configuration
  *
  * @author  Adrien <aimbert@solire.fr>
  * @license MIT http://mit-license.org/
  */
-class Conf implements ConfigInterface, \ArrayAccess
+class Conf implements ConfigInterface, ArrayAccess
 {
+    use ProcessTrait;
+
     /**
      * Renvoie toute la configuration
      *

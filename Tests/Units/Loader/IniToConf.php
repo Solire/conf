@@ -20,6 +20,7 @@ use \Solire\Conf\Loader\IniToConf as TestClass;
 class IniToConf extends atoum
 {
     protected $testLocal = TEST_DATA_DIR . '/local.ini';
+
     /**
      * Contrôle construct
      *
@@ -28,14 +29,14 @@ class IniToConf extends atoum
     public function testConstruct()
     {
         $this
-            ->object(new TestClass($this->testLocal))
+            ->object(new TestClass($this->testLocal, true))
         ;
     }
 
     public function testLoadVars()
     {
         $this
-            ->if($conf = new TestClass($this->testLocal))
+            ->if($conf = new TestClass($this->testLocal, true))
 
             ->string($conf->get('database', 'port'))
                 ->isEqualTo('3306')

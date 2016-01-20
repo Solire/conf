@@ -4,7 +4,7 @@ namespace Solire\Conf\Loader;
 
 use Solire\Conf\Conf;
 use Solire\Conf\ConfigInterface;
-use Solire\Conf\ProcessTrait;
+use Solire\Conf\Process\ParseVar;
 
 /**
  * Chargement d'une configuration à partir d'un fichier .ini
@@ -14,14 +14,21 @@ use Solire\Conf\ProcessTrait;
  */
 class IniToConf extends Conf implements ConfigInterface
 {
-    use ProcessTrait;
-
     /**
      * Charge un nouveau fichier de configuration
      *
      * @param string $iniPath Chemin vers le fichier de configuration
+     * @param $procze $name Description
      */
-    public function __construct($iniPath)
+
+    /**
+     * Charge un nouveau fichier de configuration
+     *
+     * @param type $iniPath Chemin vers le fichier de configuration
+     * @param type $process Doit-on effectuer le process de remplacement
+     * de variable
+     */
+    public function __construct($iniPath, $process = false)
     {
         $confData = parse_ini_file($iniPath, true);
 
@@ -31,10 +38,12 @@ class IniToConf extends Conf implements ConfigInterface
             }
         }
 
-        $processList = [
-            [['\Solire\Conf\Process\ParseVar', 'run']],
-        ];
+        if ($process) {
+            $processList = [
+                [[ParseVar::class, 'run']],
+            ];
 
-        $this->applyProcess($processList, $this);
+            $this->applyProcess($processList, $this);
+        }
     }
 }

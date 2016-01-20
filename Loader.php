@@ -2,6 +2,12 @@
 
 namespace Solire\Conf;
 
+use Solire\Conf\Loader\ArrayToConf;
+use Solire\Conf\Loader\IniToConf;
+use Solire\Conf\Loader\YmlToConf;
+use Solire\Conf\Process\Merge;
+use Solire\Conf\Process\ParseVar;
+
 /**
  * Créateur de Conf
  *
@@ -10,28 +16,64 @@ namespace Solire\Conf;
  */
 class Loader
 {
+    use ProcessTrait;
+
+    /**
+     * Charge un objet Conf depuis chaque données passées en les surchargeant
+     *
+     * @param array $dataArray Tableau de données sous forme de tableau ou
+     * chemin vers un fichier contenant les informations de la config
+     *
+     * @return Conf
+     */
+    public static function load(... $dataArray)
+    {
+        $conf = null;
+        foreach ($dataArray as $data) {
+            if ($conf === null) {
+                $conf = self::loadOne($data);
+                continue;
+            }
+
+            Merge::run($conf, self::loadOne($data));
+        }
+
+        $processList = [
+            [[ParseVar::class, 'run']],
+        ];
+
+        $conf->applyProcess($processList, $conf);
+
+        return $conf;
+    }
+
     /**
      * Charge un objet Conf depuis les données passées
      *
      * @param array|string $data Données sous forme de tableau ou chemin vers un
      * fichier contenant les informations de la config
-     * @return \Solire\Conf\Conf
+     *
+     * @return Conf
      * @throws Exception Si $data n'est pas exploitable
      */
-    public static function load($data)
+    private static function loadOne($data)
     {
+        if (is_a($data, Conf::class)) {
+            return $data;
+        }
+
         if (is_array($data)) {
-            return new Loader\ArrayToConf($data);
+            return new ArrayToConf($data);
         }
 
         if (file_exists($data)) {
             switch (strtolower(pathinfo($data, PATHINFO_EXTENSION))) {
                 case 'yml':
                 case 'yaml':
-                    return new Loader\YmlToConf($data);
+                    return new YmlToConf($data);
 
                 case 'ini':
-                    return new Loader\IniToConf($data);
+                    return new IniToConf($data);
             }
         }
 

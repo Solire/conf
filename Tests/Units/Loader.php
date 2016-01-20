@@ -33,15 +33,15 @@ class Loader extends atoum
             ]
         ];
         $this
-            ->if($conf = new ArrayToConf($data))
+            ->if($conf1 = new ArrayToConf($data, true))
             ->object(TestClass::load($data))
-                ->isEqualTo($conf)
-            ->if($conf = new IniToConf($this->localIni))
+                ->isEqualTo($conf1)
+            ->if($conf2 = new IniToConf($this->localIni, true))
             ->object(TestClass::load($this->localIni))
-                ->isEqualTo($conf)
-            ->if($conf = new YmlToConf($this->localYml))
+                ->isEqualTo($conf2)
+            ->if($conf3 = new YmlToConf($this->localYml, true))
             ->object(TestClass::load($this->localYml))
-                ->isEqualTo($conf)
+                ->isEqualTo($conf3)
 
             ->exception(function () {
                 TestClass::load('Data');
@@ -53,6 +53,9 @@ class Loader extends atoum
             })
                 ->hasMessage('Aucune données exploitable pour charger une Conf')
                 ->isInstanceOf('\Solire\Conf\Exception')
+
+            ->if($conf = TestClass::load($data, $this->localIni, $this->localYml))
+                ->string($conf->database->host)
         ;
     }
 }

@@ -17,7 +17,7 @@ trait ProcessTrait
      * @param \Solire\Conf\Conf $conf        Configuration a éditer
      * @return type
      */
-    protected function applyProcess(array $processList, Conf $conf)
+    public function applyProcess(array $processList, Conf $conf)
     {
         foreach ($processList as $process) {
             $callBack = array_shift($process);

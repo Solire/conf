@@ -45,7 +45,6 @@ class Conf extends atoum
             ->if($conf = new TestClass())
             ->object($conf->set(1, 'section1', 'name1'))
                 ->isIdenticalTo($conf)
-            ->dump($conf)
             ->integer($conf->get('section1', 'name1'))
                 ->isEqualTo(1)
             ->object($conf->set(3, 'section1'))

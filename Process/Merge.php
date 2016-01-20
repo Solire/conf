@@ -46,8 +46,8 @@ class Merge
                 continue;
             }
 
-            if (is_a($conf->get($key), 'Solire\Conf\Conf') === true) {
-                if (is_a($data, 'Solire\Conf\Conf') === true) {
+            if (is_a($conf->get($key), Conf::class) === true) {
+                if (is_a($data, Conf::class) === true) {
                     self::each($conf->get($key), $data);
                     continue;
                 }
