@@ -43,7 +43,6 @@ class Loader
         ];
 
         $conf->applyProcess($processList, $conf);
-
         return $conf;
     }
 

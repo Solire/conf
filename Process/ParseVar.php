@@ -63,7 +63,7 @@ class ParseVar
             }
 
             $pattern = '/(?<=' . preg_quote(self::START_VAR) . ')'
-                     . '(?<selector>[a-zA-Z0-9:]+)'
+                     . '(?<selector>[a-zA-Z0-9_' . self::DELIMITER . ']+)'
                      . '(?=' . preg_quote(self::END_VAR) . ')/'
             ;
             preg_match_all($pattern, $value, $matchs);

@@ -22,7 +22,7 @@ trait ProcessTrait
         foreach ($processList as $process) {
             $callBack = array_shift($process);
             if (is_callable($callBack) === false) {
-                continue;
+                throw new Exception('callback is not callable');
             }
 
             call_user_func(
