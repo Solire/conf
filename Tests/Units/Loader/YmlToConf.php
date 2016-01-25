@@ -33,6 +33,9 @@ class YmlToConf extends atoum
         ;
     }
 
+    /**
+     * Contrôle chargement d'un yml classique
+     */
     public function testLoadVars()
     {
         $this
@@ -50,6 +53,21 @@ class YmlToConf extends atoum
                 ->isEqualTo(['url' => 'http://localhost/'])
             ->string($conf->get('test')->get('foo')->get('bar'))
                 ->isEqualTo('foobar')
+        ;
+    }
+
+    /**
+     * Contrôle de conversion en exception d'un erreur de parse yml
+     */
+    public function testMalformatedYml()
+    {
+        $this
+            ->exception(function () {
+                $conf = new TestClass(TEST_DATA_DIR . '/malformated.yml');
+            })
+                ->hasMessage('yml malformed')
+                ->error()
+                    ->exists()
         ;
     }
 }
