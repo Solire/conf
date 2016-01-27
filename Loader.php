@@ -18,6 +18,10 @@ class Loader
 {
     use ProcessTrait;
 
+    protected static $processList = [
+        [[ParseVar::class, 'run']],
+    ];
+
     /**
      * Charge un objet Conf depuis chaque données passées en les surchargeant
      *
@@ -28,21 +32,12 @@ class Loader
      */
     public static function load(... $dataArray)
     {
-        $conf = null;
+        $conf = new Conf();
         foreach ($dataArray as $data) {
-            if ($conf === null) {
-                $conf = self::loadOne($data);
-                continue;
-            }
-
             Merge::run($conf, self::loadOne($data));
         }
 
-        $processList = [
-            [[ParseVar::class, 'run']],
-        ];
-
-        $conf->applyProcess($processList, $conf);
+        self::applyProcess(static::$processList, $conf);
         return $conf;
     }
 

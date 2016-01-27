@@ -3,7 +3,6 @@
 namespace Solire\Conf;
 
 use ArrayAccess;
-use Solire\Conf\ProcessTrait;
 
 /**
  * Gestionnaire de configuration
@@ -13,7 +12,6 @@ use Solire\Conf\ProcessTrait;
  */
 class Conf implements ConfigInterface, ArrayAccess
 {
-    use ProcessTrait;
 
     /**
      * Renvoie toute la configuration

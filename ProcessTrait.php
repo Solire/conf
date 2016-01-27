@@ -16,8 +16,9 @@ trait ProcessTrait
      * @param array             $processList Liste des processus à jouer
      * @param \Solire\Conf\Conf $conf        Configuration a éditer
      * @return type
+     * @throws Exception si un process n'est pas callable
      */
-    public function applyProcess(array $processList, Conf $conf)
+    protected static function applyProcess(array $processList, Conf $conf)
     {
         foreach ($processList as $process) {
             $callBack = array_shift($process);
@@ -31,7 +32,5 @@ trait ProcessTrait
                 $process
             );
         }
-
-        return $this;
     }
 }
