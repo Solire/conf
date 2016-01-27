@@ -49,7 +49,7 @@ class IniToConf extends atoum
             ->array((array) $conf->get('base'))
                 ->isEqualTo(['url' => 'http://localhost/'])
             ->string($conf->get('extTest')->get('ext'))
-                ->isEqualTo('root')
+                ->isEqualTo('{%database:user}')
         ;
     }
 }

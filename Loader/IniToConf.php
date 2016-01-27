@@ -17,18 +17,9 @@ class IniToConf extends Conf implements ConfigInterface
     /**
      * Charge un nouveau fichier de configuration
      *
-     * @param string $iniPath Chemin vers le fichier de configuration
-     * @param $procze $name Description
-     */
-
-    /**
-     * Charge un nouveau fichier de configuration
-     *
      * @param type $iniPath Chemin vers le fichier de configuration
-     * @param type $process Doit-on effectuer le process de remplacement
-     * de variable
      */
-    public function __construct($iniPath, $process = false)
+    public function __construct($iniPath)
     {
         $confData = parse_ini_file($iniPath, true);
 
@@ -36,14 +27,6 @@ class IniToConf extends Conf implements ConfigInterface
             foreach ($sectionValue as $name => $value) {
                 $this->set($value, $sectionName, $name);
             }
-        }
-
-        if ($process) {
-            $processList = [
-                [[ParseVar::class, 'run']],
-            ];
-
-            $this->applyProcess($processList, $this);
         }
     }
 }
