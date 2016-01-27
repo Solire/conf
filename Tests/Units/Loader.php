@@ -3,8 +3,7 @@
 namespace Solire\Conf\Tests\Units;
 
 use atoum;
-use \Solire\Conf\Loader as TestClass;
-use Solire\Conf\Loader\ArrayToConf;
+use Solire\Conf\Loader as TestClass;
 use Solire\Conf\Loader\IniToConf;
 use Solire\Conf\Loader\YmlToConf;
 
@@ -32,30 +31,51 @@ class Loader extends atoum
                 'bar' => 'foobar',
             ]
         ];
+        $confResult = new \Solire\Conf\Conf();
+        $confResult
+            ->set('plop', 'test')
+            ->set('foobar', 'foo', 'bar')
+        ;
         $this
-            ->if($conf1 = new ArrayToConf($data, true))
-            ->object(TestClass::load($data))
-                ->isEqualTo($conf1)
-            ->if($conf2 = new IniToConf($this->localIni, true))
-            ->object(TestClass::load($this->localIni))
-                ->isEqualTo($conf2)
-            ->if($conf3 = new YmlToConf($this->localYml, true))
-            ->object(TestClass::load($this->localYml))
-                ->isEqualTo($conf3)
+            ->assert('$data est un un objet conf')
+                ->object(TestClass::load($confResult))
+                    ->isEqualTo($confResult)
 
-            ->exception(function () {
-                TestClass::load('Data');
-            })
-                ->hasMessage('Aucune données exploitable pour charger une Conf')
-                ->isInstanceOf('\Solire\Conf\Exception')
-            ->exception(function () {
-                TestClass::load(TEST_DATA_DIR . '/foo.falsext');
-            })
-                ->hasMessage('Aucune données exploitable pour charger une Conf')
-                ->isInstanceOf('\Solire\Conf\Exception')
+            ->assert('$data est un tableau')
+                ->object(TestClass::load($data))
+                    ->isEqualTo($confResult)
 
-            ->if($conf = TestClass::load($data, $this->localIni, $this->localYml))
+            ->assert('$data est un chemin vers un .ini')
+                ->if($confIniRef = new IniToConf($this->localIni))
+                ->given($confIni = TestClass::load($this->localIni))
+                ->object($confIni->get('database'))
+                    ->isEqualTo($confIniRef->get('database'))
+
+            ->assert('$data est un chemin vers un .yml')
+                ->if($confYmlRef = new YmlToConf($this->localYml))
+                ->given($confYml = TestClass::load($this->localYml))
+                ->object($confYml->get('database'))
+                    ->isEqualTo($confYmlRef->get('database'))
+
+            ->assert('$data n\'est pas exploitable')
+                ->exception(function () {
+                    TestClass::load('Data');
+                })
+                    ->hasMessage('Aucune données exploitable pour charger une Conf')
+                    ->isInstanceOf('\Solire\Conf\Exception')
+
+                ->exception(function () {
+                    TestClass::load(TEST_DATA_DIR . '/foo.falsext');
+                })
+                    ->hasMessage('Aucune données exploitable pour charger une Conf')
+                    ->isInstanceOf('\Solire\Conf\Exception')
+
+            ->assert('$data multiple')
+                ->if($conf = TestClass::load($data, $this->localIni, $this->localYml))
                 ->string($conf->database->host)
+                    ->isEqualTo('localhost')
+                ->string($conf->get('foo', 'bar'))
+                    ->isEqualTo('foobar')
         ;
     }
 }
