@@ -32,7 +32,7 @@ class ParseVar
     /**
      * Remplace les noms des variables par leurs valeurs
      *
-     * @param Solire\Conf\Conf $conf Configuration dans laquelle parser les variables
+     * @param Conf $conf Configuration dans laquelle parser les variables
      *
      * @return void
      */
@@ -46,7 +46,9 @@ class ParseVar
     /**
      * Remplace les noms des variables par leurs valeurs
      *
-     * @param Solire\Conf\Conf $conf Configuration dans laquelle parser les variables
+     * @param Conf $conf Configuration dans laquelle parser les variables
+     *
+     * @return void
      */
     private static function parseVar(Conf $conf)
     {
@@ -55,15 +57,15 @@ class ParseVar
                 self::parseVar($value);
                 continue;
             }
-            if (
-                strpos($value, self::START_VAR) === false
+
+            if (strpos($value, self::START_VAR) === false
                 || strpos($value, self::END_VAR) === false
             ) {
                 continue;
             }
 
             $pattern = '/(?<=' . preg_quote(self::START_VAR) . ')'
-                     . '(?<selector>[a-zA-Z0-9_' . self::DELIMITER . ']+)'
+                     . '(?<selector>[a-zA-Z0-9' . self::DELIMITER . ']+)'
                      . '(?=' . preg_quote(self::END_VAR) . ')/'
             ;
             preg_match_all($pattern, $value, $matchs);
