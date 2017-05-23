@@ -23,12 +23,25 @@ class YmlToConf extends ArrayToConf implements ConfigInterface
      */
     public function __construct($yamlPath)
     {
-        $data = yaml_parse_file($yamlPath);
+        $data = $this->yamlParseFile($yamlPath);
 
         if ($data === false) {
             throw new Exception('yml malformed');
         }
 
         $this->arrayConvert($this, $data);
+    }
+
+    private function yamlParseFile($yamlPath)
+    {
+        if (function_exists('yaml_parse_file')) {
+            return yaml_parse_file($yamlPath);
+        }
+
+        if (class_exists('Symfony\Component\Yaml\Yaml')) {
+            return \Symfony\Component\Yaml\Yaml::parse(file_get_contents($yamlPath));
+        }
+
+        throw new Exception('No function defined to parse yml file');
     }
 }
